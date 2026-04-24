@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBD JAMAL! | Level 2026.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            background-color: #020617; 
+            color: white; 
+            overflow: hidden; 
+            font-family: 'Fira Code', monospace;
+            cursor: crosshair;
+        }
+        .neon-text { text-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6; }
+        .matrix-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Custom Scrollbar for the message */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <canvas id="matrix" class="matrix-bg"></canvas>
+
+    <div id="content" class="z-10 text-center p-6 w-full max-w-2xl">
+        </div>
+
+    <script>
+        const content = document.getElementById('content');
+        
+        // --- MATRIX BACKGROUND LOGIC ---
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(2, 6, 23, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#3b82f6";
+            ctx.font = fontSize + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 50);
+
+        // --- NAVIGATION LOGIC ---
+        function showStep1() {
+            content.innerHTML = `
+                <div class="animate__animated animate__zoomIn">
+                    <div class="mb-4 text-blue-500 font-bold tracking-[5px]">SELAMAT ULANG TAHUN </div>
+                    <h1 class="text-5xl md:text-7xl font-black mb-6 neon-text italic">MBUT</h1>
+                    <div class="glass p- rounded-xl border border-blue-500/30 inline-block mb-8">
+                       
+                        <p class="text-blue-300 font-mono italic underline uppercase"></p>   
+                    </div>
+                    <br>
+                    <button onclick="showStep2()" class="group relative px-12 py-4 bg-transparent border-2 border-blue-600 font-bold overflow-hidden transition-all hover:text-white">
+                        <div class="absolute inset-0 w-0 bg-blue-600 transition-all duration-300 group-hover:w-full -z-10"></div>
+                        PENCET BLUG
+                    </button>
+                </div>
+            `;
+        }
+
+        function showStep2() {
+            // Trigger Fireworks Loop
+            const end = Date.now() + 4000;
+            (function frame() {
+                confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#3b82f6', '#ffffff'] });
+                confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#60a5fa', '#ffffff'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+
+            content.innerHTML = `
+                <div class="animate__animated animate__fadeInDown">
+                    <h1 class="text-6xl md:text-8xl font-black mb-2 tracking-tighter">LEVEL <span class="text-blue-500">UP!</span></h1>
+                    <p class="text-2xl font-mono text-gray-400 animate-pulse">Selamat ya but,menempuh di umur 21</p>
+                    <div class="mt-12 space-x-4">
+                        <span class="px-4 py-2 bg-blue-900/30 rounded border border-blue-500/50 text-xs">Sehat Selalu</span>
+                        <span class="px-4 py-2 bg-blue-900/30 rounded border border-blue-500/50 text-xs">Lancar Rejekinya</span>
+                        <span class="px-4 py-2 bg-blue-900/30 rounded border border-blue-500/50 text-xs">Semoga Be Better </span>
+                        
+                    </div>
+                    <button onclick="showStep3()" class="mt-16 text-blue-400 hover:text-white transition-colors">MBUH PENCETEN</button>
+                </div>
+            `;
+        }
+
+        function showStep3() {
+            content.innerHTML = `
+                <div class="animate__animated animate__fadeInRight">
+                    <h2 class="text-3xl font-bold mb-12">PENCET KUE NE BLUG</h2>
+                    <div class="relative inline-block cursor-pointer group" onclick="finalStep()">
+                        <div class="text-9xl transition-transform group-hover:scale-110 active:scale-95">🎂</div>
+                        
+                    </div>
+                    <p class="mt-12 text-gray-500 font-mono text-xs italic italic"></p>
+                </div>
+            `;
+        }
+
+        function finalStep() {
+            // Big Final Confetti
+            confetti({ particleCount: 250, spread: 150, origin: { y: 0.5 }, colors: ['#3b82f6', '#ffffff', '#000000'] });
+
+            content.innerHTML = `
+                <div class="animate__animated animate__fadeInUp max-w-5xl mx-auto target-section">
+                    
+                    <div class="text-center mb-12">
+                        <h3 class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 uppercase italic">HBD YA ARYAKUN JAMBRET</h3>
+                        
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                        
+                        <div class="md:col-span-2 space-y-6">
+                            <div class="glass p-3 rounded-3xl border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                                <img src="URL_FOTO_UTAMA_JAMAL.jpg" alt="Jamal Keren" class="w-full h-auto rounded-2xl object-cover">
+                            </div>
+                            
+                            <div class="glass p-8 rounded-2xl border border-white/10 text-left relative overflow-hidden">
+                                <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                                
+                                <div class="text-gray-200 leading-relaxed space-y-3 font-sans">
+                                    <p>Yo <b>Jamal</b>! 🔥</p>
+                                    <p> Man to Man,sehat selalu,lancar rejekinya,semoga be better dari sebelumnya dan menjadi pribadi yang lebih baik lagi</p>
+                                    <p>Semoga cita cita dan whitlist tercapai secepatnya yaa,jaga kesehatan,pola makan,dan pola tidur, jangan begarang mulu lu,makin krempeng ntar</p>
+                                    <p>sory man belom bisa ngasih kado yang terbaik atau yang lu inginkan,semoga lu suka sama kado receh dari gue ini man</p>
+                                    <p> </p>
+                                    <p> </p>
+                                    <h4 class="font-bold text-blue-400 mb-4 font-mono">From Bayok Ganteng Maksimal</h4>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="bg-white p-3 pb-10 shadow-xl rounded rotate-[-3deg] hover:rotate-0 transition-transform cursor-pointer">
+                                <img src="2.jpg" alt="Memory 1" class="w-full h-40 object-cover rounded-sm">
+                                <p class="text-black text-xs font-sans mt-4 text-center italic"></p>
+                            </div>
+
+                            <div class="bg-white p-3 pb-10 shadow-xl rounded rotate-[3deg] hover:rotate-0 transition-transform cursor-pointer">
+                                <img src="jamal1.jpg" alt="Memory 2" class="w-full h-40 object-cover rounded-sm">
+                                <p class="text-black text-xs font-sans mt-4 text-center italic">#HBD MBUT</p>
+                            </div>
+
+                           
+                        </div>
+
+                    </div>
+
+                    <center>
+                        <button onclick="location.reload()" class="mt-16 text-gray-6000 text-xs hover:text-blue-400 transition-colors font-mono"> Pencet ini kalo pengen lihat dari awal lagi</button>
+                    </center>
+                </div>
+            `;
+
+            // Scroll otomatis ke section baru
+            document.querySelector('.target-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        showStep1();
+    </script>
+</body>
+</html>
